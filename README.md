@@ -1,4 +1,4 @@
-iotduino
+IoTDuino
 ========
 
 Node module for IoT apps/web-apps for PCDuino and compatible devices which can run Node.js.
@@ -11,20 +11,50 @@ The tests were made by using one million ( 1.000.000) operations then average th
 
 The code lets room for optimizations, but as it is now is fast enough to use the ultrasonic HC-SR04 distance sensor.
 
-
+### The source code on this github repo and the node module via npm become available in the next couple of days!
 
 Features:
 ========
 The following Arduino methods are supported:
- * pinMode( pin, state) - set the pin mode to INPUT (0x1), OUTPUT (0x2) or INPUT_PULLUP (0x8)
- * digitalRead( pin)
- * digitalWrite( pin, state) - set the pin state to LOW (0x0) or HIGH ( 0x1) after pinMode was called with OUTPUT as state parameter
- - pulseIn( pin, state, timeout) - read a pulse time for the specified pin and read state
- - micros() - read the number of microseconds ( modulo long type in C) from Epoch.
- - delay( milliseconds) - pause the code execution for the specified number of milliseconds. This method can be improved.
- - delayMicroseconds( microseconds) - pause the code execution for the specified number of microseconds. This method can be improved.
+ * `pinMode( pin, state)` - set the pin mode to INPUT (0x1), OUTPUT (0x2) or INPUT_PULLUP (0x8)
+ * `digitalRead( pin)` - read the current state of the selected pin.
+ * `digitalWrite( pin, state)` - set the pin state to LOW (0x0) or HIGH ( 0x1) after pinMode was called with OUTPUT as state parameter
+ - `pulseIn( pin, state, timeout)` - read a pulse time for the specified pin and read state
+ - `micros()` - read the number of microseconds ( modulo long type in C) from Epoch.
+ - `delay( milliseconds)` - pause the code execution for the specified number of milliseconds. This method can be improved.
+ - `delayMicroseconds( microseconds)` - pause the code execution for the specified number of microseconds. This method can be improved.
+ 
+Usage:
+========
+The well known blink example for the built-in PCDuino v3 LED connected to pin 13 ( same as for Arduino UNO and alike):
+```
+var duino = require( 'iotduino');
 
+duino.pinMode( 13, 1);
+setInterval( function () { 
+  duino.digitalWrite( 13, !duino.digitalRead( 13));
+}, 500);
+```
+
+Reading distance from the HC-SR04 ultrasonic senosor ( note that it requires voltage level shifter from 5V to 3.3V!):
+```
+var duino = require( 'iotduino'),
+    trigPin = 2, echoPin = 3, cm = -1;
+    
+duino.pinMode( trigPin, 1);
+duino.pinMode( echoPin, 0);
+
+setInterval ( function () { 
+  duino.digitalWrite( trigPin, 0);
+  duino.delayMicroseconds( 2);
+  duino.digitalWrite( trigPin, 1);
+  duino.delayMicroseconds( 10);
+  duino.digitalWrite( trigPin, 0);
+  cm = duino.pulseIn( echoPin, 1, 100000) / 58.0; 
+  console.log( "Distance: " + cm.toFixed(2) + " cm");
+}, 333);
+```
 
 Notes:
 ========
- - Future plans includes to this library for BeagleBone Black 
+ - Future plans includes to port this library to BeagleBone Black and possible to other similar boards.
