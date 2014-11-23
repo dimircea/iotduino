@@ -9,7 +9,7 @@ it needs 6-7 microseconds per digitalWrite ( ~ 140 - 160 KHz) operation and 4-5 
 
 The tests were made by using one million ( 1.000.000) operations then average the execution time.
 
-The code lets room for optimizations, but as it is now is fast enough to used with HC-SR04 ultrasonic distance sensor.
+The code lets room for optimizations, but in its current state is fast enough to be used with HC-SR04 ultrasonic distance sensor.
 
 ### The source code on this github repo and the node module via npm become available in the next couple of days!
 
