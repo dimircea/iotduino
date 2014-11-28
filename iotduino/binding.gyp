@@ -5,7 +5,7 @@
       "include_dirs": [
         "src"
       ],
-      "sources": [ "../common/src/Duino.c", "src/iotduino.cc" ],
+      "sources": [ "src/Duino.c", "src/iotduino.cc" ],
       "link_settings": { }
     }
   ]
