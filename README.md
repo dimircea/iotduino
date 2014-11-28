@@ -18,7 +18,7 @@ The following Arduino methods are supported:
  * `digitalRead( pin)` - read the current state of the selected pin.
  * `digitalWrite( pin, state)` - set the pin state to `LOW` (0x0) or `HIGH` ( 0x1) after `pinMode` was called with `OUTPUT` as state parameter
  - `pulseIn( pin, state, timeout)` - read a pulse time for the specified pin and state
- - `micros()` - read the number of microseconds ( modulo `long type` in C) from Epoch.
+ - `micros()` - read the number of microseconds ( modulo `unsigned long type` in C/C++) elapsed from Epoch (01.01.1970, 00:00:00 UTC).
  - `delay( milliseconds)` - pause the code execution for the specified number of milliseconds. This method implementation is on the way to be improved.
  - `delayMicroseconds( microseconds)` - pause the code execution for the specified number of microseconds. This method implementation is on the way to be improved.
  
@@ -43,7 +43,7 @@ var duino = require( 'iotduino');
 
 // pin 13 is set as OUTPUT
 duino.pinMode( 13, 1);
-// repeat every 500 milliseconds
+// repeat every 500 milliseconds, 2 times per second
 setInterval( function () { 
   // alternate the pin state between HIGH and LOW 
   duino.digitalWrite( 13, !duino.digitalRead( 13));
@@ -59,7 +59,7 @@ var duino = require( 'iotduino'),
 duino.pinMode( trigPin, 1);
 // pin 3, aka the echo pin, is set as INPUT
 duino.pinMode( echoPin, 0);
-
+// read the sensor every 333 milliseconds, ~3 times per second
 setInterval ( function () { 
   // the sensor receives LOW at the trigger pin, 
   // to prepare it for data reading
@@ -81,5 +81,5 @@ setInterval ( function () {
 
 Notes:
 ========
- - Improvements (and new features) are on the way, so you may want to check for updates from time to time.
- - Future plans includes to port this module to BeagleBone White/Black and possible to other similar boards.
+ - Improvements (and new features) are on the way, you may want to check for updates from time to time.
+ - Future plans includes to port this module for BeagleBone White/Black and possible to other similar boards.
