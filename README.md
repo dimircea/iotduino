@@ -11,8 +11,6 @@ The tests were made by using one million ( 1.000.000) operations then average th
 
 The code lets room for optimizations, but in its current state is fast enough to be used with HC-SR04 ultrasonic distance sensor.
 
-### The source code on this github repo and the node module via npm become available in the next couple of days!
-
 Features:
 ========
 The following Arduino methods are supported:
