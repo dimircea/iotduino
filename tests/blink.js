@@ -1,7 +1,9 @@
-var duino = require( '/home/ubuntu/WoTCO/node/dev/modules/iotduino/build/Release/iotduino.node');
+var duino = require( 'iotduino');
 
+// pin 13 is set as OUTPUT
 duino.pinMode( 13, 1);
+// repeat every 500 milliseconds, 2 times per second
 setInterval( function () { 
+  // alternate the pin state between HIGH and LOW 
   duino.digitalWrite( 13, !duino.digitalRead( 13));
-  console.log( "LED is now " + ( duino.digitalRead( 13) === 1 ? "ON" : "OFF"));
-}, 1000);
+}, 500);
