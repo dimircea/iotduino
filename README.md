@@ -1,16 +1,15 @@
 IoTDuino
 ========
 
-Node module for IoT apps/web-apps for PCDuino and compatible devices which can run Node.js.
+Node module for IoT apps/web-apps created by using the PCDuino or other PCDuino compatible devices able to run `Node.js`.
 
-The module is written using native C/C++ code. Benchmarks with PCDuino v3 board shows that 
-it needs 6-7 microseconds per `digitalWrite` ( ~ 140 - 160 KHz) operation and 4-5 microseconds 
-( ~200 - 250 KHz) per `digitalRead` operation. 
+The module uses native C/C++ code. Benchmarks with PCDuino v3 board reveals that a `digitalWrite` operations takes 6-7 microseconds (~ 140 - 160 KHz) and a `digitalRead` operation takes 4-5 microseconds (~200 - 250 KHz). 
 
-The tests were made by using one million ( 1.000.000) read/write operations then average the execution time. Check (or run) the `tests/performance_tests.js` file.
+The tests were made by using one million (1.000.000) read/write operations. Run the `tests/performance_tests.js` script if you like to check the performance of your own board.
 
-The code lets room for optimizations, but in its current state is fast enough to be used with HC-SR04 ultrasonic distance sensor. 
-Work in progress: use the module with `DHT22` humidity and temperature sensor which requires a custom `1-Wire` communication protocol and it is very timming sensitive. 
+The code lets room for many optimizations. As it is now, can be used to read the HC-SR04 ultrasonic distance sensor about 250 times per second (250Hz) without visible lags. 
+
+Work in progress: use the module with `DHT22` humidity and temperature sensor which requires a custom `1-Wire` communication protocol (the communication with this sensor is really time sensitive). 
 
 Features:
 ========
@@ -34,7 +33,7 @@ Global installation (available for any node application):
 ```
 npm install -g iotduino
 ```
-In this case, use `sudo` or login as `root` on a linux when installing the module.
+For the global installation case, you have to use `sudo` or to login as `root` on linux systems to install this module.
  
 Usage:
 ========
@@ -44,13 +43,14 @@ var duino = require( 'iotduino');
 
 // pin 13 is set as OUTPUT
 duino.pinMode( 13, 1);
+// repeat every 500 milliseconds
 setInterval( function () { 
   // alternate the pin state between HIGH and LOW 
   duino.digitalWrite( 13, !duino.digitalRead( 13));
 }, 500);
 ```
 
-Reading distance with the `HC-SR04` ultrasonic senosor (it requires voltage level shifter from 5V to 3.3V and back since the PCDuino GPIOs are not 5V tolerant and the sensor does now work if powered from 3.3V):
+Reading distance with the `HC-SR04` ultrasonic sensor (requires hardware voltage level shifter from 5V to 3.3V and back since the PCDuino GPIOs are not 5V tolerant and the `HCSR-04` sensor does not work if powered from 3.3V):
 ```
 var duino = require( 'iotduino'),
     trigPin = 2, echoPin = 3, cm = -1;
