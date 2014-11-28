@@ -24,6 +24,20 @@ The following Arduino methods are supported:
  - `delay( milliseconds)` - pause the code execution for the specified number of milliseconds. This method can be improved.
  - `delayMicroseconds( microseconds)` - pause the code execution for the specified number of microseconds. This method can be improved.
  
+Install:
+========
+Use `npm` like for any other `node` module:
+```
+npm install iotduino
+```
+for local installations (only for the application folder from which you execute the command), or use:
+
+```
+npm install -g iotduino
+```
+for a global installation (available for any node application). 
+For the global installation case, don't forgot to use `sudo` in case you are not `root` on a linux system when you try to install the module.
+ 
 Usage:
 ========
 The well known blink example for the built-in PCDuino v3 LED connected to pin 13 ( same as for Arduino UNO and alike):
@@ -57,4 +71,5 @@ setInterval ( function () {
 
 Notes:
 ========
- - Future plans includes to port this library to BeagleBone Black and possible to other similar boards.
+ - Improvements and are made on a weekly basis, therefore check for the latest updates every week.
+ - Future plans includes to port the library to BeagleBone White/Black and possible to other similar boards.
