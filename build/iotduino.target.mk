@@ -65,7 +65,7 @@ INCS_Release := \
 	-I$(srcdir)/src
 
 OBJS := \
-	$(obj).target/$(TARGET)/../common/src/Duino.o \
+	$(obj).target/$(TARGET)/src/Duino.o \
 	$(obj).target/$(TARGET)/src/iotduino.o
 
 # Add to the list of files we specially track dependencies for.
