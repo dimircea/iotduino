@@ -3,7 +3,7 @@ IoTDuino
 
 Node module for IoT apps/web-apps created by using the PCDuino or other PCDuino compatible devices able to run `Node.js`.
 
-The module uses native C/C++ code. Benchmarks with PCDuino v3 board reveals that a `digitalWrite` operations takes 6-7 microseconds (~ 140 - 160 KHz) and a `digitalRead` operation takes 4-5 microseconds (~200 - 250 KHz). 
+The module uses native C/C++ code. Benchmarks with PCDuino v3 board reveals that a `digitalWrite` operation takes 6-7 microseconds (~ 140 - 160 KHz) and a `digitalRead` operation takes 4-5 microseconds (~200 - 250 KHz). 
 
 The tests were made by using one million (1.000.000) read/write operations. Run the `tests/performance_tests.js` script if you like to check the performance of your own board.
 
