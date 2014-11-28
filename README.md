@@ -4,12 +4,13 @@ IoTDuino
 Node module for IoT apps/web-apps for PCDuino and compatible devices which can run Node.js.
 
 The module is written using native C/C++ code. Benchmarks with PCDuino v3 board shows that 
-it needs 6-7 microseconds per digitalWrite ( ~ 140 - 160 KHz) operation and 4-5 microseconds 
-( ~200 - 250 KHz) per digitalRead operation. 
+it needs 6-7 microseconds per `digitalWrite` ( ~ 140 - 160 KHz) operation and 4-5 microseconds 
+( ~200 - 250 KHz) per `digitalRead` operation. 
 
-The tests were made by using one million ( 1.000.000) operations then average the execution time.
+The tests were made by using one million ( 1.000.000) read/write operations then average the execution time. Check (or run) the `tests/performance_tests.js` file.
 
-The code lets room for optimizations, but in its current state is fast enough to be used with HC-SR04 ultrasonic distance sensor.
+The code lets room for optimizations, but in its current state is fast enough to be used with HC-SR04 ultrasonic distance sensor. 
+Work in progress: use the module with `DHT22` humidity and temperature sensor which requires a custom `1-Wire` communication protocol and it is very timming sensitive. 
 
 Features:
 ========
