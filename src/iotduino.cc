@@ -1,6 +1,6 @@
 #include <node.h>
 #include <v8.h>
-#include "../../common/src/Duino.h"
+#include "Duino.h"
 
 using namespace v8;
 
