@@ -24,4 +24,4 @@ setInterval ( function () {
   distanceCm = duino.pulseIn( echoPin, pinState.HIGH, 100000) / 58.0; 
   // show the distance value in the console
   console.log( "Distance: " + distanceCm.toFixed(2) + " cm");
-}, 333);
+}, 3);

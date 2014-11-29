@@ -1,5 +1,5 @@
 { "name": "iotduino",
-   "version": "0.1.1",
+   "version": "0.1.3",
    "main":"./build/Release/iotduino",
    "description": "The library allows creating Node.js IoT projects by providing access to low level hardware resources.",
    "keywords": [
