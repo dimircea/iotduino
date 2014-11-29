@@ -34,7 +34,12 @@ Global installation (available for any node application):
 npm install -g iotduino
 ```
 For the global installation case, you have to use `sudo` or to login as `root` on linux systems to install this module.
- 
+
+In case you get the following error:
+```
+Error: Cannot find module 'iotduino'
+```
+check the `NODE_PATH` variable (use `echo $NODE_MODULES`) to verify if it points to the right location (normally this is `/usr/local/lib/node_modules`). You may also what to read the [node modules official page](http://nodejs.org/api/modules.html#modules_loading_from_the_global_folders) for additional information. 
 Usage:
 ========
 The well known LED blink example by using the built-in PCDuino v3 LED connected to pin 13 ( same as for Arduino UNO and alike):
