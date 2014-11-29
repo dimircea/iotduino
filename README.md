@@ -49,7 +49,7 @@ Usage:
 ========
 The well known LED blink example by using the built-in PCDuino v3 LED connected to pin 13 ( same as for Arduino UNO and alike):
 ```
-var duino = require( 'iotduino')
+var duino = require( 'iotduino'),
     pinMode = duino.PinMode, pinState = duino.PinState,
     pins = duino.Pins, ledPin = pins.GPIO13;
     
