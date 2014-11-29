@@ -7,7 +7,7 @@ var duino = require( 'iotduino'),
 duino.pinMode( trigPin, pinMode.OUTPUT);
 // the echo pin (GPIO3) is set as INPUT
 duino.pinMode( echoPin, pinMode.INPUT);
-// read the sensor every 333 milliseconds, ~3 times per second
+// read the sensor every 100 milliseconds, 10 times per second
 setInterval ( function () { 
   // the sensor receives LOW at the trigger pin, 
   // to prepare it for data reading
@@ -24,4 +24,4 @@ setInterval ( function () {
   distanceCm = duino.pulseIn( echoPin, pinState.HIGH, 100000) / 58.0; 
   // show the distance value in the console
   console.log( "Distance: " + distanceCm.toFixed(2) + " cm");
-}, 3);
+}, 100);
