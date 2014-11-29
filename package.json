@@ -1,7 +1,7 @@
 { "name": "iotduino",
    "version": "0.1.4",
    "main":"./build/Release/iotduino",
-   "description": "The library allows creating Node.js IoT projects by providing access to low level hardware resources.",
+   "description": "Create Node.js IoT projects by using low level hardware access of the PCDuino boards.",
    "keywords": [
        "IoT",
        "Arduino",
