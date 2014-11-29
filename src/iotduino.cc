@@ -115,6 +115,72 @@ Handle<Value> methodDelayMicroseconds( const Arguments& args) {
   return scope.Close( Integer::New( microseconds));
 }
 
+/**
+ * Define the pin mode constants.
+ * Access is made as PinMode.mode ( e.g. PinMode.OUTPUT)
+ */
+void definePinModes( Handle<Object> target) {
+  HandleScope scope;
+  Handle<Object> pinModesObj = Object::New();
+  target->Set(String::NewSymbol("PinMode"), pinModesObj);
+  NODE_DEFINE_CONSTANT(pinModesObj, INPUT);
+  NODE_DEFINE_CONSTANT(pinModesObj, OUTPUT);
+  NODE_DEFINE_CONSTANT(pinModesObj, INPUT_PULLUP);
+}
+
+/**
+ * Define the pin state constants.
+ * Access is made as PinState.state ( e.g. PinState.HIGH)
+ */
+void definePinStates( Handle<Object> target) {
+  HandleScope scope;
+  Handle<Object> pinStatesObj = Object::New();
+  target->Set(String::NewSymbol("PinState"), pinStatesObj);
+  NODE_DEFINE_CONSTANT(pinStatesObj, HIGH);
+  NODE_DEFINE_CONSTANT(pinStatesObj, LOW);
+}
+
+/**
+ * Define the pins constants.
+ * Access is made as Pin.GPIOxx ( e.g. Pin.GPIO13)
+ */
+void definePins( Handle<Object> target) {
+  HandleScope scope;
+  Handle<Object> pinsObj = Object::New();
+  target->Set(String::NewSymbol("Pins"), pinsObj);
+  NODE_DEFINE_CONSTANT(pinsObj, GPIO0);
+  NODE_DEFINE_CONSTANT(pinsObj, GPIO1);
+  NODE_DEFINE_CONSTANT(pinsObj, GPIO2);
+  NODE_DEFINE_CONSTANT(pinsObj, GPIO3);
+  NODE_DEFINE_CONSTANT(pinsObj, GPIO4);
+  NODE_DEFINE_CONSTANT(pinsObj, GPIO5);
+  NODE_DEFINE_CONSTANT(pinsObj, GPIO6);
+  NODE_DEFINE_CONSTANT(pinsObj, GPIO7);
+  NODE_DEFINE_CONSTANT(pinsObj, GPIO8);
+  NODE_DEFINE_CONSTANT(pinsObj, GPIO9);
+  NODE_DEFINE_CONSTANT(pinsObj, GPIO10);
+  NODE_DEFINE_CONSTANT(pinsObj, GPIO11);
+  NODE_DEFINE_CONSTANT(pinsObj, GPIO12);
+  NODE_DEFINE_CONSTANT(pinsObj, GPIO13);
+  NODE_DEFINE_CONSTANT(pinsObj, GPIO14);
+  NODE_DEFINE_CONSTANT(pinsObj, GPIO15);
+  NODE_DEFINE_CONSTANT(pinsObj, GPIO16);
+  NODE_DEFINE_CONSTANT(pinsObj, GPIO17);
+  NODE_DEFINE_CONSTANT(pinsObj, GPIO18);
+  NODE_DEFINE_CONSTANT(pinsObj, GPIO19);
+  NODE_DEFINE_CONSTANT(pinsObj, GPIO20);
+  NODE_DEFINE_CONSTANT(pinsObj, GPIO21);
+  NODE_DEFINE_CONSTANT(pinsObj, GPIO22);
+  NODE_DEFINE_CONSTANT(pinsObj, GPIO23);
+  
+  NODE_DEFINE_CONSTANT(pinsObj, A0);
+  NODE_DEFINE_CONSTANT(pinsObj, A1);
+  NODE_DEFINE_CONSTANT(pinsObj, A2);
+  NODE_DEFINE_CONSTANT(pinsObj, A3);
+  NODE_DEFINE_CONSTANT(pinsObj, A4);
+  NODE_DEFINE_CONSTANT(pinsObj, A5);
+}
+
 void init(Handle<Object> target) {
   // call Duino resource initialization
   initDuino();
@@ -128,6 +194,13 @@ void init(Handle<Object> target) {
   testDigitalWrite( n);
   gettimeofday(&endTime, NULL);
   showStatistics( startTime, endTime, n);*/
+  // PinMode constants
+  definePinModes( target);
+  // PinState constants
+  definePinStates( target);
+  // Pin constants
+  definePins( target);
+  // define the accessible methods
   target->Set( String::NewSymbol( "pinMode"),
       FunctionTemplate::New( methodPinMode)->GetFunction());
   target->Set( String::NewSymbol( "digitalWrite"),

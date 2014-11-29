@@ -8,10 +8,8 @@ Release/obj.target/iotduino/src/iotduino.o: ../src/iotduino.cc \
  /home/ubuntu/.node-gyp/0.10.28/deps/v8/include/v8.h \
  /home/ubuntu/.node-gyp/0.10.28/deps/v8/include/v8stdint.h \
  /home/ubuntu/.node-gyp/0.10.28/src/node_object_wrap.h \
- /home/ubuntu/.node-gyp/0.10.28/src/node.h \
- ../src/../../common/src/Duino.h ../src/../../common/src/PinMode.h \
- ../src/../../common/src/PinState.h ../src/../../common/src/PinSource.h \
- ../src/../../common/src/Pins.h
+ /home/ubuntu/.node-gyp/0.10.28/src/node.h ../src/Duino.h \
+ ../src/PinMode.h ../src/PinState.h ../src/PinSource.h ../src/Pins.h
 ../src/iotduino.cc:
 /home/ubuntu/.node-gyp/0.10.28/src/node.h:
 /home/ubuntu/.node-gyp/0.10.28/deps/uv/include/uv.h:
@@ -22,8 +20,8 @@ Release/obj.target/iotduino/src/iotduino.o: ../src/iotduino.cc \
 /home/ubuntu/.node-gyp/0.10.28/deps/v8/include/v8stdint.h:
 /home/ubuntu/.node-gyp/0.10.28/src/node_object_wrap.h:
 /home/ubuntu/.node-gyp/0.10.28/src/node.h:
-../src/../../common/src/Duino.h:
-../src/../../common/src/PinMode.h:
-../src/../../common/src/PinState.h:
-../src/../../common/src/PinSource.h:
-../src/../../common/src/Pins.h:
+../src/Duino.h:
+../src/PinMode.h:
+../src/PinState.h:
+../src/PinSource.h:
+../src/Pins.h:

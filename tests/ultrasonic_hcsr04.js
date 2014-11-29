@@ -1,25 +1,27 @@
 var duino = require( 'iotduino'),
-    trigPin = 2, echoPin = 3, cm = -1;
+    pinMode = duino.PinMode, pinState = duino.PinState,
+    pins = duino.Pins, trigPin = pins.GPIO2, echoPin = pins.GPIO3, 
+    distanceCm = -1;
 
-// pin 2, the aka trigger pin, is set as OUTPUT
-duino.pinMode( trigPin, 1);
-// pin 3, aka the echo pin, is set as INPUT
-duino.pinMode( echoPin, 0);
+// the trigger pin (GPIO2) is set as OUTPUT
+duino.pinMode( trigPin, pinMode.OUTPUT);
+// the echo pin (GPIO3) is set as INPUT
+duino.pinMode( echoPin, pinMode.INPUT);
 // read the sensor every 333 milliseconds, ~3 times per second
 setInterval ( function () { 
   // the sensor receives LOW at the trigger pin, 
   // to prepare it for data reading
-  duino.digitalWrite( trigPin, 0);
+  duino.digitalWrite( trigPin, pinState.LOW);
   // wait for the sensor to get ready
   duino.delayMicroseconds( 2);
   // inform the sensor that we want to make a reading
-  duino.digitalWrite( trigPin, 1);
+  duino.digitalWrite( trigPin, pinState.HIGH);
   duino.delayMicroseconds( 10);
-  // put the sensor back in the waiting state
-  duino.digitalWrite( trigPin, 0);
+  // end the commands chain to the sensor
+  duino.digitalWrite( trigPin, pinState.LOW);
   // read the value HIGH time period from the sensor
   // and compute the distance based on it and the physical laws
-  cm = duino.pulseIn( echoPin, 1, 100000) / 58.0; 
+  distanceCm = duino.pulseIn( echoPin, pinState.HIGH, 100000) / 58.0; 
   // show the distance value in the console
-  console.log( "Distance: " + cm.toFixed(2) + " cm");
+  console.log( "Distance: " + distanceCm.toFixed(2) + " cm");
 }, 333);
