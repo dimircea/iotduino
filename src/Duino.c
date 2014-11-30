@@ -98,17 +98,8 @@ void pinMode( uint8_t pin, uint8_t mode) {
     default:
       break; 
   }
-  switch ( mode) {         
-    case INPUT:
-      break;
-    case OUTPUT:  
-      hardwarePinMode( pin, mode);  
-      break;  
-    case INPUT_PULLUP:
-      hardwarePinMode( pin, mode);  
-      break;
-    default:
-      break; 
+  if ( mode == INPUT || mode == OUTPUT || mode == INPUT_PULLUP) {
+    hardwarePinMode( pin, mode);  
   }
 }
 

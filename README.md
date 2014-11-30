@@ -93,6 +93,13 @@ setInterval ( function () {
 }, 333);
 ```
 
+What's new:
+========
+v0.1.5:
+ - bug fix: `pinMode` had issues to come back to INPUT after set to OUTPUT
+ - added `micros` method
+ - improvements in the native code for faster execution
+ 
 Work in progress:
 ========
 - add support for `analogRead` and `analogWrite`

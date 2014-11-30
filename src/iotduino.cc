@@ -115,6 +115,17 @@ Handle<Value> methodDelayMicroseconds( const Arguments& args) {
   return scope.Close( Integer::New( microseconds));
 }
 
+Handle<Value> methodMicros( const Arguments& args) {
+  HandleScope scope;
+  if ( args.Length() > 0) {
+    return ThrowException(
+      Exception::TypeError(
+        String::New( "The 'micros' method takes NO parameters!"))
+    );
+  }
+  return scope.Close( Integer::New( micros()));
+}
+
 /**
  * Define the pin mode constants.
  * Access is made as PinMode.mode ( e.g. PinMode.OUTPUT)
@@ -213,5 +224,7 @@ void init(Handle<Object> target) {
       FunctionTemplate::New( methodDelay)->GetFunction());
   target->Set( String::NewSymbol( "delayMicroseconds"),
       FunctionTemplate::New( methodDelayMicroseconds)->GetFunction());
+  target->Set( String::NewSymbol( "micros"),
+      FunctionTemplate::New( methodMicros)->GetFunction());
 }
 NODE_MODULE(iotduino, init)
