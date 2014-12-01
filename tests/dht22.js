@@ -1,7 +1,7 @@
 /* WORK IN PROGRESS: not ready yet! */
 
 
-var duino = require( '../build/Release/iotduino'),
+var duino = require( 'iotduino'),
     pinMode = duino.PinMode, pinState = duino.PinState,
     pins = duino.Pins, dataPin = pins.GPIO4;
     
@@ -29,77 +29,56 @@ setInterval( function () {
   // and then a HIGH signal for about 80 microseconds
   startTime = duino.micros();
   while ( duino.digitalRead( dataPin) == pinState.HIGH) {
-    signalTime = duino.micros() - startTime;
-    if ( signalTime > 50) {
-      console.log( "Step 1 error: expected pinState.HIGH for less than 40 microseconds !");
+    if ( duino.micros() - startTime > 50) {
+      console.log (" Error 1");
       return;
     }
   }
   startTime = duino.micros();
   while ( duino.digitalRead( dataPin) == pinState.LOW) {
-    signalTime = duino.micros() - startTime;
-    if ( signalTime > 90) {
-      console.log( "Step 2 error: expected pinState.LOW for less than 80 microseconds !");
-      return
+    if ( duino.micros() - startTime > 90) {
+      console.log (" Error 2");
+      return;
     }
   }
   startTime = duino.micros();
   while ( duino.digitalRead( dataPin) == pinState.HIGH) {
-    signalTime = duino.micros() - startTime;
-    if ( signalTime > 90) {
-      console.log( "Step 3 error: expected pinState.LOW for less than 80 microseconds !");
+    if ( duino.micros() - startTime > 90) {
+      console.log (" Error 3");
       return;
     }
   }
   // read the 40 bits of data sent by the sensor
-  while ( bitNr < totalBitsNr) {
+  for ( bitNr = 0; bitNr < totalBitsNr; bitNr++) {
     // receive the about 50 microseconds LOW signal, 
     // used as separator before two consecutive data bits
     startTime = duino.micros();
     while ( duino.digitalRead( dataPin) == pinState.LOW) {
-      signalTime = duino.micros() - startTime;
-      if ( signalTime > 60) {
-        //console.log( "Step 4 error: expected pinState.LOW for about 50 microseconds !");
+      if ( duino.micros() - startTime > 90) {
+        console.log (" Error 4");
         return;
       }
     }
     // receive the data bit
     startTime = duino.micros();
     while ( duino.digitalRead( dataPin) == pinState.HIGH) {
-      signalTime = duino.micros() - startTime;
-      if ( signalTime > 90) {
-       // console.log( "Step 5 error: expected pinState.HIGH for less than 80 microseconds !");
+      if ( duino.micros() - startTime > 120) {
+        console.log (" Error 5");
         return;
       }
     }
     signalTime = duino.micros() - startTime;
     // signal is between 20-40 microseconds, then it is a '0' bit
-    if (signalTime < 50) { 
-      data[bitNr] = 0;
-      //data[bitNr] = signalTime;
-    } 
     // signal is between 60-80 microseconds, then it is a '1' bit
-    else if ( signalTime < 100) {
-      data[bitNr] = 1;
-      //data[bitNr] = signalTime;
-    } 
-    // error reading the data bit, start again the process;
-    else {
-      console.log( "Error reading data bit! Starting over!");
-      return;
-    }
-    bitNr++;
+    data[bitNr] = signalTime > 50 ? 1 : 0;
   }
   
-  for ( bitNr = 0; bitNr < totalBitsNr; bitNr++) {
-    if( bitNr % 8 === 0) {
-      process.stdout.write('\n');
-    } else {
-      process.stdout.write(data[bitNr] + ", ");
-    }
+  for ( bitNr = 15; bitNr >= 0; bitNr--) {
+    humidity += data[bitNr] * Math.pow( 2, 15 - bitNr);
+    temperature += data[bitNr + 16] * Math.pow( 2, 15 - bitNr);
   }
-  console.log( "Temperature: " + temperature + "°C");
-  console.log( "Start collecting data...");
+  humidity /= 10.0;
+  temperature /= 10.0;
   
-  // alternate the pin state between HIGH and LOW 
+  console.log( "Temperature: " + temperature + "°C, Humidity: " + humidity + "%");  
 }, 2000);
