@@ -7,7 +7,7 @@ The module uses native C/C++ code. Benchmarks with PCDuino v3 board reveals that
 
 The tests were made by using one million (1.000.000) read/write operations. Run the `tests/performance_tests.js` script if you like to check the performance of your own board. The results may by different from board to board and also depends on the load of your CPU when the tests are executed (background processes, crons, services, applications, etc).
 
-The code lets room for many optimizations. As it is now, can be used to
+The code lets room for many optimizations. As it is now, can be used to:
  * read the HC-SR04 ultrasonic distance sensor without visible lags. The only limitation is the sensor itself and the measured distance (remember: the speed of the sound in air is approx. 343m/s, which means that one millisecond is required to measure every 34.3cm). Check `tests/ultrasonic_hcsr04.js` example.
  * read the `DHT22` humidity and temperature sensor. It requires a custom `1-Wire` communication protocol (the communication with this sensor is really time sensitive). Check `tests/dht22.js` example.
 
@@ -95,13 +95,15 @@ setInterval ( function () {
 
 What's new:
 ========
-v0.1.6
+v0.1.6:
+
  * various improvements and bug fixes
  * the `DHT22` temperature and humidity sensor works now (check the `tests/dht22.js` example).
+ 
 v0.1.5:
- - bug fix: `pinMode` had issues to come back to INPUT after set to OUTPUT
- - added `micros` method
- - improvements in the native code for faster execution
+ * bug fix: `pinMode` had issues to come back to INPUT after set to OUTPUT
+ * added `micros` method
+ * improvements in the native code for faster execution
  
 Work in progress:
 ========
