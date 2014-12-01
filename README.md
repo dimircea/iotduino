@@ -14,7 +14,7 @@ The code lets room for many optimizations. As it is now, can be used to:
 Features:
 ========
 The following Arduino methods are supported:
- * `pinMode( pin, state)` - set the pin mode to `INPUT` (0x1), `OUTPUT` (0x2) or `INPUT_PULLUP` (0x8)
+ * `pinMode( pin, state)` - set the pin mode to `INPUT` (0x0), `OUTPUT` (0x1) or `INPUT_PULLUP` (0x2)
  * `digitalRead( pin)` - read the current state of the selected pin.
  * `digitalWrite( pin, state)` - set the pin state to `LOW` (0x0) or `HIGH` ( 0x1) after `pinMode` was called with `OUTPUT` as state parameter
  * `pulseIn( pin, state, timeout)` - read a pulse time for the specified pin and state
@@ -23,7 +23,7 @@ The following Arduino methods are supported:
  * `delayMicroseconds( microseconds)` - pause the code execution for the specified number of microseconds. This method implementation is on the way to be improved.
 
 The following constant groups are defined (check the USAGE section for concret examples) :
- * `PinMode` - defines the pin mode states. Possible values: INPUT, OUTPUT and INPUT_PULLUP. Alternative: use 0, 1 and 8.
+ * `PinMode` - defines the pin mode states. Possible values: INPUT, OUTPUT and INPUT_PULLUP. Alternative: use 0, 1 and 2.
  * `PinState` - define the possible pin states. Possible values: LOW and HIGH. Alternative: use 0 and 1.
  * `Pins` - define the existing pins. Possible values: GPIO0, GPIO1, ... GPIO23, A0, A1, A2, A3, A4, A5. Alternative: use 0, 1, ..., 23 to identify GPIOs and 0, 1, 2, 3, 4, 5 to identify the analog pins.
  
