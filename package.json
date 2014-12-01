@@ -1,5 +1,5 @@
 { "name": "iotduino",
-   "version": "0.1.5",
+   "version": "0.1.6",
    "main":"./build/Release/iotduino",
    "description": "Create Node.js IoT projects by using low level hardware access of the PCDuino boards.",
    "keywords": [

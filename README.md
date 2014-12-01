@@ -95,6 +95,9 @@ setInterval ( function () {
 
 What's new:
 ========
+v0.1.6
+ * various improvements and bug fixes
+ * the `DHT22` temperature and humidity sensor works now (check the `tests/dht22.js` example).
 v0.1.5:
  - bug fix: `pinMode` had issues to come back to INPUT after set to OUTPUT
  - added `micros` method
