@@ -1,4 +1,4 @@
-var duino = require( '../build/Release/iotduino'),
+var duino = require( 'iotduino'),
     pinMode = duino.PinMode, pinState = duino.PinState,
     pins = duino.Pins, pin = 0;
     
