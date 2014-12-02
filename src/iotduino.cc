@@ -89,6 +89,19 @@ Handle<Value> methodPulseIn( const Arguments& args) {
   return scope.Close( Integer::New( result));
 }
 
+Handle<Value> methodAnalogRead( const Arguments& args) {
+  HandleScope scope;
+  if ( args.Length() != 1) {
+    return ThrowException(
+      Exception::TypeError(
+        String::New( "The 'analogRead' method requires one parameter: ( unsigned integer ) pinNumber!"))
+    );
+  }
+  int8_t pinNumber = args[0]->ToInteger()->Value();
+  double result = analogRead( pinNumber);
+  return scope.Close( Number::New( result));
+}
+
 Handle<Value> methodDelay( const Arguments& args) {
   HandleScope scope;
   if ( args.Length() != 1) {
@@ -220,6 +233,8 @@ void init(Handle<Object> target) {
       FunctionTemplate::New( methodDigitalRead)->GetFunction());
   target->Set( String::NewSymbol( "pulseIn"),
       FunctionTemplate::New( methodPulseIn)->GetFunction());
+  target->Set( String::NewSymbol( "analogRead"),
+      FunctionTemplate::New( methodAnalogRead)->GetFunction());
   target->Set( String::NewSymbol( "delay"),
       FunctionTemplate::New( methodDelay)->GetFunction());
   target->Set( String::NewSymbol( "delayMicroseconds"),

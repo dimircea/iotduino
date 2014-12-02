@@ -9,7 +9,7 @@ The tests were made by using one million (1.000.000) read/write operations. Run 
 
 The code lets room for many optimizations. As it is now, can be used to:
  * read the HC-SR04 ultrasonic distance sensor without visible lags. The only limitation is the sensor itself and the measured distance (remember: the speed of the sound in air is approx. 343m/s, which means that one millisecond is required to measure every 34.3cm). Check `tests/ultrasonic_hcsr04.js` example.
- * read the `DHT22` humidity and temperature sensor. It requires a custom `1-Wire` communication protocol (the communication with this sensor is really time sensitive). Check `tests/dht22.js` example.
+ * read the DHT22 humidity and temperature sensor. It requires a custom `1-Wire` communication protocol (the communication with this sensor is really time sensitive). Check `tests/dht22.js` example.
 
 Features:
 ========

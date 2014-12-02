@@ -77,7 +77,7 @@ void digitalWrite( uint8_t pin, uint8_t state);
  * @return HIGH (1) or LOW (0) state of the pin.
  *          (@see PinState.h for possible values)
  */
-int digitalRead( uint8_t pin);
+uint8_t digitalRead( uint8_t pin);
 
 /**
  * Perform a pulse read. It detects how long the pin stays in the specified
@@ -91,6 +91,14 @@ int digitalRead( uint8_t pin);
  *          a time-out value (in microseconds) set as maximum expected time in that state
  */
 unsigned long pulseIn( uint8_t pin, uint8_t state, unsigned long timeout);
+
+/**
+ * Read the analogous value for the specified pin (HIGH or LOW)
+ * @param pin
+ *          the pin from which to read 
+ * @return the analogous value
+ */
+int analogRead( uint8_t pin);
 
 /**
  * Return the number of milliseconds passed from 1970-01-01 00:00:00 +0000 (UTC)

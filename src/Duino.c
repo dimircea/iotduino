@@ -121,9 +121,9 @@ void digitalWrite(uint8_t pin, uint8_t value) {
   }    
 }
 
-int digitalRead(uint8_t pin) {
+uint8_t digitalRead(uint8_t pin) {
   char  buf[4];    
-  int ret = -1;     
+  uint8_t ret = -1;     
   if ( pin <= MAX_GPIO_NUM) {
     memset( (void *)buf, 0, sizeof( buf));
     lseek( gpioPinSrc[pin], 0, SEEK_SET);
@@ -170,6 +170,33 @@ unsigned long pulseIn( uint8_t pin, uint8_t state, unsigned long timeout) {
     }
   }   
   return micros() - value;
+}
+
+int analogRead( uint8_t pin) {
+  char str[10];
+  char buf[32];    
+  int ret = -1;
+  char *p = NULL;   
+  if ( pin <= A5 ) {
+    memset( buf, 0, sizeof( buf));
+    lseek( gpioADCSrc[pin], 0, SEEK_SET);
+    ret = read( gpioADCSrc[pin], buf, sizeof( buf));
+    if ( ret <= 0 ) {
+        fprintf( stderr, "Failed to read ADC %d !\n", pin);
+        exit( -1);
+    }
+    memset( ( void *)str, 0, sizeof( str));
+    sprintf( str, "adc%d", pin);
+    p = strstr( buf, str) + strlen( str) + 1;
+    sscanf( p, "%d", &ret);
+  } else if ( pin > A5 && pin <= MAX_ADC_NUM ) {
+    // TODO: implement SPI adc reading
+    //ret = readSpiAdc( pin - 6);
+  } else {
+    fprintf( stderr, "%s ERROR: invalid pin, pin=%d\n", __FUNCTION__, pin);
+    exit( -1);
+  }      
+  return ret;
 }
 
 unsigned long millis() {
