@@ -17,6 +17,7 @@ The following Arduino methods are supported:
  * `pinMode( pin, state)` - set the pin mode to `INPUT` (0x0), `OUTPUT` (0x1) or `INPUT_PULLUP` (0x2)
  * `digitalRead( pin)` - read the current state of the selected pin.
  * `digitalWrite( pin, state)` - set the pin state to `LOW` (0x0) or `HIGH` ( 0x1) after `pinMode` was called with `OUTPUT` as state parameter
+ * `analogRead( pin)` - read the value of the analogous pin. Remember: pins A0 and A1 have 6 bits ADC resolution (so the method returns values in the interval [0, 63]) while the pins A2, A3, A4 and A5 have 12 bits ADC resolution (so the method returns values in the interval [0, 4095]). Also, keep in mind that the voltage reference is 3.3V (well, almost and depends on many factors), so we can only measure positive voltage up to 3.3V (resistor divider circuits may be used to measure higher values if needed).
  * `pulseIn( pin, state, timeout)` - read a pulse time for the specified pin and state
  * `micros()` - read the number of microseconds ( modulo `unsigned long type` in C/C++) elapsed from Epoch (01.01.1970, 00:00:00 UTC).
  * `delay( milliseconds)` - pause the code execution for the specified number of milliseconds. This method implementation is on the way to be improved.
@@ -95,8 +96,13 @@ setInterval ( function () {
 
 What's new:
 ========
-v0.1.6:
+v0.1.7:
+ * added `analogRead` method with support for analogous pins A0, A1, A2, A3, A4, A5
+ * added test case for ADC reading, see `tests/adc.js`
+ * various code improvements
+ * some small few bug fixes
 
+v0.1.6:
  * various improvements and bug fixes
  * the `DHT22` temperature and humidity sensor works now (check the `tests/dht22.js` example).
  
@@ -107,7 +113,7 @@ v0.1.5:
  
 Work in progress:
 ========
-- add support for `analogRead` and `analogWrite`
+- add support for `analogWrite`
 - add PWM support
 
 Notes:
