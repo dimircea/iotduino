@@ -3,6 +3,19 @@
 int gpioPinSrc[MAX_GPIO_NUM + 1];
 int gpioModeSrc[MAX_GPIO_NUM + 1];
 int gpioADCSrc[MAX_ADC_NUM + 1];
+static const char *pwm_dev = "/dev/pwmtimer";
+
+typedef struct tagPWM_Config {
+    int channel;
+    int dutycycle;
+} PWM_Config,*pPWM_Config;
+
+typedef struct tagPWM_Freq {
+    int channel;
+    int step;
+    int pre_scale;
+    unsigned int freq;
+} PWM_Freq,*pPWM_Freq;
 
 int writeToFile( int fd, char *str, int len) {
   int ret = -1;
@@ -197,6 +210,101 @@ int analogRead( uint8_t pin) {
     exit( -1);
   }      
   return ret;
+}
+
+void analogWrite( uint8_t pin, uint8_t value) {
+  int ret = -1;
+  int fd = -1;
+  int val = 0;
+  PWM_Config pwmconfig;
+  pwmconfig.channel = pin;
+  pwmconfig.dutycycle = value;
+  // bound limits [0, 255] are assured because of the uint8_t type, no need to check them
+  if ( pin == 3 || pin == 5 || pin == 6 || pin == 9 || pin == 10 || pin == 11) {
+    fd = open( pwm_dev, O_RDONLY);
+    if ( fd < 0 ) {
+      pabort( "analogWrite: opening PWM device failed!");
+    }      
+    switch ( pin) {
+      case 5:
+      case 6:
+        ret = ioctl( fd, HWPWM_DUTY, &pwmconfig);
+        if ( ret < 0) {
+          pabort( "analogWrite: can't set HWPWM_DUTY");
+        }  
+        break;
+      case 3:
+      case 9:    
+      case 10:   
+      case 11:   
+        ret = ioctl( fd, PWM_CONFIG, &pwmconfig);
+        if ( ret < 0) {
+          pabort( "analogWrite: can't set PWM_CONFIG");   
+        }
+        ret = ioctl(fd, PWMTMR_START, &val);
+        if (ret < 0) {
+          pabort("analogWrite: can't set PWMTMR_START");
+        }
+        break;
+
+      default:   
+        break;
+    }
+    if( fd) {
+      close(fd);
+    }
+  } else {
+    fprintf( stderr, "%s ERROR: invalid pin, pin=%d\n", __FUNCTION__, pin);
+    exit(-1);
+  }      
+}
+
+int setPwmFrequency( uint8_t pin, uint16_t freq) {
+  int ret = -1;
+  int fd = -1;
+  PWM_Freq pwmfreq;
+  if ( pin == GPIO3 || pin == GPIO5 || pin == GPIO6 || pin == GPIO9 || pin == GPIO10 || pin == GPIO11) {
+    pwmfreq.channel = pin;
+    pwmfreq.freq = freq;
+    pwmfreq.step = 0;
+    fd = open( pwm_dev, O_RDONLY);
+    if ( fd < 0 ) {
+      pabort( "setPwmFrequency: open pwm device fail!\n");
+    }
+    if ( pin == GPIO5 || pin == GPIO6) {  
+      if ( ( freq == 195) || ( freq == 260) || ( freq == 390) || ( freq == 520) || ( freq == 781)) {
+        ret = ioctl(fd, PWM_FREQ, &pwmfreq);
+        if ( ret < 0) {
+          pabort("setPwmFrequency: can't set PWM_FREQ!\n");
+        }
+      } else {
+        fprintf(stderr, "setPwmFrequency: invalid frequency value - it must be one of [ 195, 260, 390, 520, 781], pin=%d!\n", pin);
+      }
+    } 
+    // pins 3, 9, 10, 11
+    else {
+      if ((freq >= MIN_PWMTMR_FREQ) && (freq <= MAX_PWMTMR_FREQ)){
+        ret = ioctl( fd, PWMTMR_STOP, &pwmfreq.channel);
+        if ( ret < 0) {
+          pabort("setPwmFrequency: can't set PWMTMR_STOP!\n");  
+        }               
+        ret = ioctl( fd, PWM_FREQ, &pwmfreq);
+        if ( ret < 0) {
+          pabort( "setPwmFrequency: can't set PWM_FREQ!\n");   
+        }
+      } else {
+        fprintf( stderr, "setPwmFrequency: invalid frequency[%d,%d], pin=%d!\n", MIN_PWMTMR_FREQ, MAX_PWMTMR_FREQ, pin);
+      }
+    }
+    if( fd) {
+      close(fd);
+    }
+    return pwmfreq.step;
+  } else {
+    fprintf( stderr, "setPwmFrequency: invalid pin, [pin=%d]! Only pin 3, 5, 6, 9, 10 and 11 can be used for PWM!\n", pin);
+    exit( -1);
+  } 
+  return 0;
 }
 
 unsigned long millis() {

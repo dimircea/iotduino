@@ -1,14 +1,17 @@
-#undef MAX_GPIO_NUM
 #define MAX_GPIO_NUM 23
-
-#undef MAX_GPIO_MODE_NUM
 #define MAX_GPIO_MODE_NUM 8
-
-#undef MAX_PWM_NUM
 #define MAX_PWM_NUM 5
-
-#undef MAX_ADC_NUM
 #define MAX_ADC_NUM 11
+
+#define MAX_PWM_LEVEL 255
+#define PWM_CONFIG (0x105)
+#define PWMTMR_START (0x101)
+#define PWMTMR_STOP     (0x102)
+#define HWPWM_DUTY (0x106)
+#define PWM_FREQ (0x107)
+#define MAX_PWMTMR_FREQ (2000)   //2kHz pin 3,9,10,11
+#define MIN_PWMTMR_FREQ (126)    //126Hz pin 3,9,10,11
+#define MAX_PWMHW_FREQ  (20000)  //20kHz pin 5,6
 
 #define GPIO0  0 
 #define GPIO1  1 

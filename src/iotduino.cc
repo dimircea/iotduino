@@ -102,6 +102,62 @@ Handle<Value> methodAnalogRead( const Arguments& args) {
   return scope.Close( Number::New( result));
 }
 
+Handle<Value> methodAnalogWrite( const Arguments& args) {
+  HandleScope scope;
+  if ( args.Length() != 2) {
+    return ThrowException(
+      Exception::TypeError(
+        String::New( "The 'analogWrite' method requires two parameters: ( unsigned integer ) pinNumber and ( unsigned integer) value!"))
+    );
+  }
+  uint8_t pinNumber = args[0]->ToInteger()->Value();
+  int32_t value = args[1]->ToInteger()->Value();
+  
+  if ( value < 0 || value > MAX_PWM_LEVEL) {
+    return ThrowException(
+      Exception::TypeError(
+        String::New( "The 'analogWrite' method requires that the 'value' parameter is an integer in the range [0, 255]!"))
+    );
+  }
+  analogWrite( pinNumber, (uint8_t) value);
+  return scope.Close( Boolean::New( true));
+}
+
+Handle<Value> methodSetPwmFrequency( const Arguments& args) {
+  HandleScope scope;
+  if ( args.Length() != 2) {
+    return ThrowException(
+      Exception::TypeError(
+        String::New( "The 'setPwmFrequency' method requires two parameters: ( unsigned integer ) pinNumber and ( unsigned integer) frequency!"))
+    );
+  }
+  uint8_t pinNumber = args[0]->ToInteger()->Value();
+  int32_t frequency = args[1]->ToInteger()->Value();
+  if ( ( pinNumber != GPIO3) && ( pinNumber != GPIO5) && ( pinNumber != GPIO6) && ( pinNumber != GPIO9) && ( pinNumber != GPIO10) && ( pinNumber != GPIO11)) {
+   return ThrowException(
+      Exception::TypeError(
+        String::New( "The 'setPwmFrequency' method requires that the 'pinNumber' parameter must be one of: GPIO3, GPIO5, GPIO6, GPIO9, GPIO10 or GPIO11!"))
+    );
+  } 
+  if ( ( pinNumber == GPIO5) || ( pinNumber == GPIO6)) {
+    if ( ( frequency != 195) && ( frequency != 260) && ( frequency != 390) && ( frequency != 520) && ( frequency != 781)) {
+      return ThrowException(
+        Exception::TypeError(
+          String::New( "The 'setPwmFrequency' method requires that the 'frequency' parameter for GPIO5 or GPIO6 is one of the following values: 195, 260, 390, 520, 781!"))
+      );
+    }
+  } else {
+    if ( ( frequency < MIN_PWMTMR_FREQ) || ( frequency > MAX_PWMHW_FREQ)) {
+      return ThrowException(
+        Exception::TypeError(
+          String::New( "The 'setPwmFrequency' method requires that the 'frequency' parameter for GPIO3, GPIO9, GPIO10 and GPIO11 must be in the range [126, 2000] Hz!"))
+      );
+    }
+  }
+  int result = setPwmFrequency( pinNumber, frequency);
+  return scope.Close( Integer::New( result));
+}
+
 Handle<Value> methodDelay( const Arguments& args) {
   HandleScope scope;
   if ( args.Length() != 1) {
@@ -235,6 +291,10 @@ void init(Handle<Object> target) {
       FunctionTemplate::New( methodPulseIn)->GetFunction());
   target->Set( String::NewSymbol( "analogRead"),
       FunctionTemplate::New( methodAnalogRead)->GetFunction());
+  target->Set( String::NewSymbol( "analogWrite"),
+      FunctionTemplate::New( methodAnalogWrite)->GetFunction());
+  target->Set( String::NewSymbol( "setPwmFrequency"),
+      FunctionTemplate::New( methodSetPwmFrequency)->GetFunction());
   target->Set( String::NewSymbol( "delay"),
       FunctionTemplate::New( methodDelay)->GetFunction());
   target->Set( String::NewSymbol( "delayMicroseconds"),

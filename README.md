@@ -18,6 +18,8 @@ The following Arduino methods are supported:
  * `digitalRead( pin)` - read the current state of the selected pin.
  * `digitalWrite( pin, state)` - set the pin state to `LOW` (0x0) or `HIGH` ( 0x1) after `pinMode` was called with `OUTPUT` as state parameter
  * `analogRead( pin)` - read the value of the analogous pin. Remember: pins A0 and A1 have 6 bits ADC resolution (so the method returns values in the interval [0, 63]) while the pins A2, A3, A4 and A5 have 12 bits ADC resolution (so the method returns values in the interval [0, 4095]). Also, keep in mind that the voltage reference is 3.3V (well, almost and depends on many factors), so we can only measure positive voltage up to 3.3V (resistor divider circuits may be used to measure higher values if needed).
+ * `analogWrite( pin, value)` - create a PWM effect on the selected pin. The supported pins are GPIO3, GPIO5, GPIO6, GPIO9, GPIO10 and GPIO11. The `value` parameter is an integer number in range [0, 255]. The method is used in combination with `setPwmFrequency` method!
+ * `setPwmFrequency( pin, frequency)` - set the PWM frequency for the specified pin. Pins GPIO5 and GPIO6 supports only: 195Hz, 260Hz, 390Hz, 520Hz and 781Hz while pins GPIO3, GPIO9, GPIO10 and GPIO11 supports integer values in the range [126, 2000]Hz.
  * `pulseIn( pin, state, timeout)` - read a pulse time for the specified pin and state
  * `micros()` - read the number of microseconds ( modulo `unsigned long type` in C/C++) elapsed from Epoch (01.01.1970, 00:00:00 UTC).
  * `delay( milliseconds)` - pause the code execution for the specified number of milliseconds. This method implementation is on the way to be improved.
@@ -96,6 +98,13 @@ setInterval ( function () {
 
 What's new:
 ========
+v0.1.8:
+ * added `analogWrite` method with support for pins: GPIO3, GPIO5, GPIO6, GPIO9, GPIO10 and GPIO11
+ * added `setPwmFrequency` method with support for pins: GPIO3, GPIO5, GPIO6, GPIO9, GPIO10 and GPIO11
+ * added test case for `analogWrite` and `setPwmFrequency`, see `tests/analogWrite.js`
+ * various code improvements
+ * multiple bug fixes
+
 v0.1.7:
  * added `analogRead` method with support for analogous pins A0, A1, A2, A3, A4, A5
  * added test case for ADC reading, see `tests/adc.js`
@@ -113,8 +122,9 @@ v0.1.5:
  
 Work in progress:
 ========
-- add support for `analogWrite`
-- add PWM support
+- Serial support
+- SPI support
+- I2C support
 
 Notes:
 ========

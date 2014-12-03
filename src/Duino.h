@@ -101,6 +101,31 @@ unsigned long pulseIn( uint8_t pin, uint8_t state, unsigned long timeout);
 int analogRead( uint8_t pin);
 
 /**
+ * Create a square wave PWM signal to emulate voltage values.
+ * @param pin
+ *          the pin affected by this method
+ *          One of the pins: 3, 5, 6, 9, 10, 11
+ * @param value
+ *          a positive integer between 0 and 255
+ *          which controls the duty cycle 
+ */
+void analogWrite( uint8_t pin, uint8_t value);
+
+/**
+ * Set the frequency value for the PWM associated with the 
+ * specified pin. 
+ * NOTE: GPIO3, 9, 10, 11 PWM frequency range is 125Hz ~ 2KHz
+ *       and GPIO5, 6 PWM frequency can only be set to: 195Hz, 260Hz, 390Hz, 520Hz, 781Hz
+ * Frequency values out of the above specifications results in no changes of the current value!
+ *
+ * @param pin
+ *          the pin affected by this method
+ * @param freq
+ *          the frequency value to set.
+ */
+int setPwmFrequency( uint8_t pin, uint16_t freq);
+
+/**
  * Return the number of milliseconds passed from 1970-01-01 00:00:00 +0000 (UTC)
  * (known as Epoch time) until the moment of calling this method.
  * NOTE: since the number can be very large, the type range is overpassed 
